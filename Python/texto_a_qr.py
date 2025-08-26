@@ -1,15 +1,17 @@
-#Programa genera un codigo QR apartir de texto.
+#Pograma que genera codigo QR a partir de texto.
 
 import qrcode
 
-text = "hola"
+# Texto que quieres convertir a QR
+url = "Hola mundo"
 
-# Crear el objeto QR
-img = qrcode.make(text)
+# Crear el código QR
+img = qrcode.make(url)
 
-# Ruta de guardado
-ruta = "/Users/User/Documents/qr{}.png".format(text)
+# Crear un nombre seguro para el archivo
+nombre_archivo = "name.png"
 
 # Guardar la imagen QR
-with open(ruta, "wb") as f:
-    img.save(f)
+img.save(nombre_archivo)
+
+print(f"QR guardado como {nombre_archivo}")
