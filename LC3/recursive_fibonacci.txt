@@ -1,0 +1,36 @@
+.ORIG x4000
+
+LD R2, NEG
+LD R1, LIM
+LD R3, A 
+LD R4, B
+
+JSR RECU
+LEA R0, TER
+PUTS
+HALT
+
+RECU
+   ADD R5, R7, #0
+RECUDOS
+   ADD R6, R3, R4
+   ADD R0, R6, #0
+   OUT
+   ADD R3, R4, #0
+   ADD R4, R6, #0
+   
+   ADD R1, R2, R1
+   BRp SKIP
+   ADD R7, R5, #0
+   RET
+   
+   SKIP
+   JSR RECUDOS
+
+NEG .FILL #-1
+LIM .FILL x3
+A .FILL x1
+B .FILL x1
+TER .STRINGZ "\nTERMINO"
+
+.END

@@ -1,0 +1,24 @@
+.ORIG x4000
+;----------------------------------------
+; Ejemplo: Suma de dos numeros
+;----------------------------------------
+LD R1, NUMU 
+LD R2, NUMD
+
+INICIA
+       JSR SUM
+       
+
+IMP
+       OUT
+       HALT
+       
+SUM
+       ADD R0, R1, R2
+       ADD R3, R3, R0
+       JSR IMP
+
+
+NUMU .FILL x3
+NUMD .FILL x7
+.END

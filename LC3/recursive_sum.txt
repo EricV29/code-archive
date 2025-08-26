@@ -1,0 +1,75 @@
+.ORIG x8200
+;----------------------------------------
+; Ejemplo: Sumatoria
+;----------------------------------------
+LD R2, NEG 
+LD R0, LIM
+
+
+INICIA
+       JSR P
+       
+
+A
+       LOOP_INICIO
+       ADD R3, R3, R1
+       ADD R1, R2, R1 
+       BRp LOOP_INICIO
+       LOOP_END 
+       LD R0, AC
+       ADD R0, R0, R3 
+       OUT
+       HALT
+       
+P
+       ADD R1, R1, R0
+       JSR A
+
+AC .FILL x0000
+NEG .FILL #-2  
+LIM .FILL xE ;METER VALOR PAR PARA QUE LA SUMA SEA PAR, SI NO, SERA IMPAR
+UNO .FILL x1
+.END
+
+--------------------------------
+UTILIZANDO R7 CON RET
+-------------------------------
+.ORIG x8200
+;----------------------------------------
+; Ejemplo: Sumatoria
+;----------------------------------------
+LD R2, NEG 
+LD R0, LIM
+
+
+INICIA
+       JSR P
+       JSR A
+       OUT
+       HALT
+       
+
+A
+       ADD R5, R7, #0
+       LOOP_INICIO
+       ADD R3, R3, R1
+       ADD R1, R2, R1 
+       BRp LOOP_INICIO
+       LOOP_END 
+       LD R0, AC
+       ADD R0, R0, R3 
+       ADD R7, R5, #0
+       RET
+       
+       
+P
+       ADD R5, R7, #0
+       ADD R1, R1, R0
+       ADD R7, R5, #0
+       RET
+
+AC .FILL x0000
+NEG .FILL #-2  
+LIM .FILL xE ;METER VALOR PAR PARA QUE LA SUMA SEA PAR, SI NO, SERA IMPAR
+UNO .FILL x1
+.END

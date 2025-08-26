@@ -1,0 +1,19 @@
+.ORIG x2800
+;----------------------------------------
+; Ejemplo: IMPRIMIR ASCII 126 AL 64
+;----------------------------------------
+LD R1, M       ;AGREGA EL VALOR DE M A R1
+LD R2, N       ;AGREGA EL VALOR DE N A R2
+LD R0, C       ;AGREGA EL VALOR DE C R0
+
+LOOP_INICIO    ;INICIA BULCE
+ADD R0, R2, R0 ;DISMINUYE X7F DE UNO EN UNO 
+OUT            ;IMPRIME R0
+ADD R1, R2, R1 ;DISMINUYE DE 127 A 63
+BRp LOOP_INICIO;VERIFICA SI ES 63
+LOOP_END       ;TERMINA BUCLE 
+
+C .FILL x7F    ;AGREGA x7F A C
+N .FILL #-1    ;AGREGA -1 A N
+M .FILL x4F    ;AGREGA x4F A M
+.END

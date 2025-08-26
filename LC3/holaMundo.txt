@@ -1,0 +1,12 @@
+.ORIG x3000 ;INICIO DE PROGRAMA
+;----------------------------------------
+; Ejemplo: Hola mundo
+;----------------------------------------
+LEA R0, DE ;CARGA EN LA DIRECCION R0 LA VARIABLE DE
+PUTS ;IMPRIMIR EL MENSAJE 
+
+HALT ;DETENER 
+
+DE .STRINGZ "Hola mundo!\n" ;ALMACENAR MENSAJE EN DE 
+
+.END 

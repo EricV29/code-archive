@@ -1,0 +1,9 @@
+.ORIG x7000 ;INICIA PROGRAMA
+;----------------------------------------
+; Ejemplo: Mimic
+;----------------------------------------
+START ;UNA ETIQUETA
+IN ;SOLICITA UN CARACTER
+BR START ;VUELVE A EJECUTAR
+
+.END ;FINALIZA EL PROGRAMA

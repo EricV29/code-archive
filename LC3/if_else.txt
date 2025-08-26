@@ -1,0 +1,38 @@
+.ORIG x3000
+
+;----------------------------------------
+; Ejemplo: Comparar número con 0x40
+;----------------------------------------
+
+LD R1, NUM       ; Cargar el número a comparar
+LD R2, B_VAL     ; Cargar valor de referencia (0x40)
+
+; Calcular R1 - R2
+NOT R2, R2       ; R2 = ~R2
+ADD R2, R2, #1   ; R2 = -R2
+ADD R3, R1, R2   ; R3 = R1 - B_VAL
+
+BRp POSITIVE     ; Si R3 > 0, salta a POSITIVE
+
+; ELSE: número <= 0x40
+LEQ
+LD R0, MSG_LOW
+OUT
+BR END_PROGRAM
+
+POSITIVE
+LD R0, MSG_HIGH
+OUT
+
+END_PROGRAM
+HALT
+
+;----------------------------------------
+; Datos
+;----------------------------------------
+NUM       .FILL x50       ; Número a comparar (puedes cambiarlo)
+B_VAL     .FILL x40       ; Valor de referencia
+MSG_LOW   .FILL x2D       ; '-' representa menor o igual
+MSG_HIGH  .FILL x2B       ; '+' representa mayor
+
+.END
