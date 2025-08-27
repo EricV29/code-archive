@@ -1,0 +1,413 @@
+#BASICS##########################################
+
+#VIEW DATABASES
+SHOW DATABASES;
+
+#CREATE DATABASE
+CREATE DATABASE nameDataBase;
+
+#USE DATABASE
+USE nameDataBase;
+
+#CREATE TABLE
+create table if not exists productos(
+id int(11) auto_increment,
+producto varchar(11),
+descripcion text,
+precio float(11,2),
+primary key(id));
+
+#DESCRIBE TABLE
+describe productos;
+
+#DEFAULT ATRIBUTE
+#Unsigned integers are used for positive numbers only, such as age or ID fields.
+CREATE TABLE person (
+    id INT UNSIGNED AUTO_INCREMENT NOT NULL,
+    name VARCHAR(11),
+    description TEXT,
+    age INT UNSIGNED,
+    PRIMARY KEY(id)
+);
+
+#DML##########################################
+
+#INSERT ROW
+insert into productos values(null,'Teclado','El mejor teclado del mercado',150);
+insert into productos values(null,'Telefono','Asus, un celular gaming',9000);
+
+#UPDATE ROW
+update productos set precio = 200 where producto = 'Teclado';
+update productos set descripcion = 'Asus, celular gaming pro' where producto = 'Telefono';
+
+#DELETE DATA
+#TRUNCATE elimina todos los registros de una tabla de forma rápida y eficiente.
+#Si la tabla tiene una columna con autoincremento (secuencia), al usar DELETE la numeración no se reinicia; continuará desde el último valor utilizado.
+#En cambio, con TRUNCATE la secuencia se reinicia, comenzando nuevamente desde el valor inicial.
+
+delete from productos;
+truncate table productos;
+
+#Eliminar registro especifico
+delete from productos where id = 1001 limit 1;
+
+#QUERIES##########################################
+
+#RELATIONAL OPERATORS
+# =   equal
+# <>  not equal
+# >   greater than
+# <   less than
+# <=  less than or equal to
+# >=  greater than or equal to
+select * from tabla where nombre <> 'Nombre';
+select * from tabla where edad > '19';
+select * from tabla where anio < '50';
+select * from tabla where fecha >= '20';
+select * from tabla where precio <= '20';
+
+#LOGIC OPERATORS
+#AND 
+#OR 
+#XOR 
+#NOT
+select * from productos where (producto = 'hp') and (precio <= 200);
+select * from productos where (producto = 'hp') or (descripcion = 'Laptop');
+select * from productos where (producto = 'hp') xor (precio <=200);
+select * from productos where not (producto = 'Motorola');
+
+#RELATIONAL OPERATOR 
+#BETWEEN
+#IN
+select * from productos where precio between 100 and 150;       
+select * from productos where not precio between 100 and 150;
+select * from productos where proveedor in('hp','Mecanico');  
+
+#COUNT
+select count(*) from productos;
+select count(*) from productos where precio = 1000;
+select count(*) from productos where nombre = 'Laptop';
+
+#SUM
+select sum(cantidad) from productos;
+select sum(cantidad) from productos where proveedor = 'hp';h
+
+#GROUP BY
+select nombre, count(*) from productos group by nombre;
+select nombre, sum(precio) from productos group by nombre;
+select nombre, max(precio), min(precio) from productos group by nombre;
+select nombre, descripcion, count(*) from productos group by nombre, descripcion;
+ 
+ #COUNT
+select count(*) from productos;
+select count(*) from productos where precio = 1000;
+select count(*) from productos where nombre regexp 'e.*e';
+select count(*) from productos where descripcion like '%Hd%';
+select count(*) from productos where descripcion not like '%hd%';
+
+
+#TIPOS DE DATOS##########################################
+
+#INT
+TINYINT
+/* Range: -128 to 127 (or 0 to 255 if UNSIGNED)
+Used for fields like age, where values are small.*/
+
+SMALLINT
+/* Range: Approximately -32,768 to 32,767 (or 0 to 65,535 UNSIGNED)
+Recommended for IDs in small businesses.*/
+
+MEDIUMINT
+/*Range: Up to about 16 million values (or 24 million UNSIGNED)
+Example: Suitable for telecom companies managing phone numbers.*/
+
+INT or INTEGER
+/*Range: Around 2 billion values (or 4 billion UNSIGNED)
+Ideal for larger companies handling big datasets.*/
+
+BIGINT
+/*Range: Over 9 quintillion values
+Used by very large corporations like Apple for massive data storage.*/
+
+#DECIMAL
+FLOAT
+A floating-point number with approximate precision.
+You can define the total number of digits and the number of decimals:
+price FLOAT(6,2) -- 6 total digits, 2 after the decimal point
+Example: 1234.56
+
+DOUBLE (or REAL)
+Similar to FLOAT but with greater precision.
+price DOUBLE(8,4) -- 8 total digits, 4 after the decimal point
+
+DECIMAL (or NUMERIC)
+An exact numeric type, ideal for monetary values because it does not round values like FLOAT or DOUBLE.
+price DECIMAL(10,2) -- 10 total digits, 2 after the decimal point
+Example: 99999999.99
+
+#STRINGS AND ALPHANUMERIC
+CHAR
+Fixed-length string type, up to 255 characters. Useful for very specific fields.
+Example: name CHAR(1)
+
+VARCHAR
+Variable-length string, useful when you don’t know the exact length. Can store up to 65,535 characters.
+Example: name VARCHAR(255)
+
+BINARY and VARBINARY
+Store raw bytes, useful for binary data.
+
+TEXT
+Used for long text, such as descriptions. No default value is assigned.
+
+BLOB
+Used to store binary large objects, like images or compressed files (ZIP).
+
+TINYBLOB, MEDIUMBLOB, LONGBLOB
+Variants of BLOB with different sizes:
+
+TINYBLOB: up to 255 bytes
+
+MEDIUMBLOB: up to 16 MB
+
+LONGBLOB: up to 4 GB
+
+ENUM
+Stores a single value from a defined set of options.
+
+SET
+Stores multiple values from a set of up to 64 options. You can choose any combination.
+
+#DATE AND TIME
+DATE
+Stores dates in the format YYYY-MM-DD. Examples: 20220715 or 2022-07-15.
+
+DATETIME
+Recommended for timestamp instances with both date and time. Format: YYYY-MM-DD HH:MM:SS.
+
+TIME
+Stores hours, minutes, and seconds. Format: HH:MM:SS. Can store times up to 35 days in the past or future.
+
+TIMESTAMP
+Stores both date and time, with flexible formatting options.
+Can use the property ON UPDATE CURRENT_TIMESTAMP to automatically record when a record was modified or added.
+
+YEAR
+Stores a year value.
+
+#JOINS
+
+#Simple JOIN
+SELECT * 
+FROM products AS p
+JOIN supplier AS s
+ON p.supplier_id = s.id;
+
+#Retrieves all columns from both tables where the supplier_id matches.
+#JOIN with specific columns
+SELECT p.name, p.description, p.price, s.name 
+FROM products AS p
+JOIN supplier AS s
+ON p.supplier_id = s.id;
+
+#Selects only the product details and the supplier name to avoid repeating IDs.
+#LEFT JOIN
+#Retrieves all records from the left table (products) and the matching records from the right table (supplier).
+SELECT * 
+FROM products AS p
+LEFT JOIN supplier AS s
+ON s.id = p.supplier_id;
+
+
+#RIGHT JOIN
+#Retrieves all records from the right table (products) and the matching records from the left table (supplier).
+SELECT * 
+FROM supplier AS s
+RIGHT JOIN products AS p
+ON s.id = p.supplier_id;
+
+#INNER JOIN
+#Returns only the rows that have matching values in both tables.
+SELECT p.name, p.description, p.price, s.name 
+FROM supplier AS s
+INNER JOIN products AS p
+ON s.id = p.supplier_id;
+
+#Only shows products that have a matching supplier.
+#STRAIGHT_JOIN
+#Forces the join order from left to right, which can be useful for optimization in some cases.
+SELECT p.name, p.description, p.price, s.name 
+FROM supplier AS s
+STRAIGHT_JOIN products AS p
+ON s.id = p.supplier_id;
+
+#Full Data Query
+#Retrieves complete information by joining three tables:
+SELECT nombre, titulo, fechaprestamo
+FROM loans AS l
+JOIN members AS m ON m.document = l.document
+JOIN books AS b ON l.book_code = b.code;
+
+#All Loans (including members or books that might be missing)
+#Uses LEFT JOIN to include all loans even if some member or book data is missing:
+SELECT nombre, titulo, fechaprestamo
+FROM loans AS l
+LEFT JOIN members AS m ON l.document = m.document
+LEFT JOIN books AS b ON l.book_code = b.code;
+
+#Loans for members with or without matches in books
+#Combines LEFT JOIN and INNER JOIN for selective results:
+SELECT nombre, titulo, fechaprestamo
+FROM loans AS l
+LEFT JOIN members AS m ON l.document = m.document
+JOIN books AS b ON l.book_code = b.code;
+
+
+#NOT NULL and DEFAULT Example
+#NOT NULL forces the user to enter a value for the field.
+#DEFAULT sets a predefined value if no input is provided.
+
+CREATE TABLE IF NOT EXISTS books (
+    id INT UNSIGNED AUTO_INCREMENT,
+    title VARCHAR(40) NOT NULL,
+    publisher VARCHAR(15),
+    author VARCHAR(30) DEFAULT 'Unknown',  -- Automatically assigns 'Unknown' if no author is provided
+    price DECIMAL(5,2) UNSIGNED DEFAULT 500.25,
+    quantity MEDIUMINT UNSIGNED NOT NULL,
+    PRIMARY KEY(id)
+);
+
+#Inserting data with all fields
+INSERT INTO books VALUES (1, 'C# in One Hour', 'Kingpart', 'Miguel', 300, 50);
+
+#Omitting some optional fields (author provided)
+INSERT INTO books (title, publisher, author, quantity) VALUES ('Java', 'Changopart', 'Juan', 30);
+
+#Omitting author and publisher, author defaults to 'Unknown'
+INSERT INTO books (title, quantity) VALUES ('SQL', 200);
+
+#Using NOT NULL ensures fields are not left empty.
+#Using DEFAULT provides a fallback value when no input is given.
+
+#ZEROFILL Attribute Example
+#ZEROFILL fills numeric fields with leading zeros. Useful for IDs or quantities to maintain a consistent width.
+
+#Create table with ZEROFILL attributes
+CREATE TABLE IF NOT EXISTS books (
+    id INT(6) ZEROFILL UNSIGNED AUTO_INCREMENT,
+    title VARCHAR(40) NOT NULL,
+    publisher VARCHAR(15),
+    author VARCHAR(30) DEFAULT 'Unknown',  -- Automatically assigns 'Unknown' if no author is provided
+    price DECIMAL(5,2) UNSIGNED DEFAULT 500.25,
+    quantity MEDIUMINT ZEROFILL UNSIGNED NOT NULL,
+    PRIMARY KEY(id)
+);
+
+#Using ZEROFILL ensures numeric values are padded with leading zeros, e.g., ID 000001 or quantity 000050.
+
+#STRING HANDLING FUNCTIONS##########################################
+
+#Concatenate strings:
+SELECT CONCAT('Hello', ' ', 'How are you?');  -- Joins strings together
+SELECT CONCAT_WS('-', 'Miguel', 'Lopez', 'Martinez');  -- Joins strings using a separator (first parameter)
+
+#String length:
+SELECT LENGTH('Hello everyone');  -- Counts the number of characters including spaces
+
+#Substring from left or right:
+SELECT LEFT('Good morning', 8);   -- Returns the first 8 characters from the left
+SELECT RIGHT('Good afternoon', 10);  -- Returns the last 10 characters from the right
+
+#Trim spaces:
+SELECT LTRIM('      help    ');   -- Removes spaces from the left
+SELECT RTRIM('      silly    ');  -- Removes spaces from the right
+SELECT TRIM('    superman    ');  -- Removes spaces from both sides
+
+#Replace characters:
+SELECT REPLACE('Eric.udemy.com', 'm', 'w');  -- Returns a string with replacements; second parameter is the character to replace
+
+#Repeat strings:
+SELECT REPEAT('SQL ', 5);  -- Repeats the first parameter n times
+
+#Reverse a string:
+SELECT REVERSE('Hello');  -- Returns the string backwards
+
+#Change case:
+SELECT LOWER('HELLO HOW ARE YOU');  -- Converts all letters to lowercase
+SELECT LCASE('hello friends');      -- Same as LOWER
+SELECT UPPER('hello how are you');  -- Converts all letters to uppercase
+SELECT UCASE('hello friends');      -- Same as UPPER
+
+#Combined examples using table columns:
+SELECT CONCAT_WS('/', name, price) FROM products;
+SELECT LEFT(name, 5) FROM products;
+SELECT LOWER(name), UPPER(description) FROM products;
+
+#MATHEMATICAL FUNCTIONS##########################################
+
+#Ceiling:
+SELECT CEILING(12.3);  -- Rounds a number up to the nearest integer
+SELECT CEILING(price) FROM products;
+
+#Floor:
+SELECT FLOOR(14.6);  -- Rounds a number down to the nearest integer
+SELECT FLOOR(price) FROM products;
+
+#Modulo (remainder):
+SELECT MOD(12, 4);  -- Returns the remainder of the division
+
+#Power / Exponentiation:
+SELECT POWER(2, 3);  -- Returns 2 raised to the power of 3
+
+#Round:
+SELECT ROUND(20.40);  -- Rounds a number; decimals 0.5 and above round up
+
+
+#PATTERN MATCHING WITH LIKE AND NOT LIKE##########################################
+
+#Basic search:
+SELECT * FROM products;
+SELECT * FROM products WHERE description = 'mechanical';
+
+#Using LIKE for partial matches:
+SELECT * FROM products WHERE description LIKE '%Meca%';  -- Matches any description containing 'Meca'
+SELECT * FROM products WHERE description NOT LIKE '%Meca%';  -- Excludes descriptions containing 'Meca'
+
+#Starts with:
+SELECT * FROM products WHERE description LIKE 'M%';  -- Descriptions starting with 'M'
+SELECT * FROM products WHERE description NOT LIKE 'M%';  -- Excludes descriptions starting with 'M'
+
+#Ends with:
+SELECT * FROM products WHERE description LIKE '%M';  -- Descriptions ending with 'M'
+SELECT * FROM products WHERE description NOT LIKE '%M';  -- Excludes descriptions ending with 'M'
+
+
+#PATTERN MATCHING WITH REGEXP AND NOT REGEXP
+
+#Basic search using REGEXP:
+SELECT * FROM products WHERE supplier REGEXP 'Moto';  
+#Finds rows where 'supplier' contains the substring 'Moto'
+
+#Matching specific characters:
+SELECT * FROM products WHERE supplier REGEXP '[hemps]';  
+#Finds rows where 'supplier' contains any of the letters h, e, m, p, or s
+
+#Matching a range of letters:
+SELECT * FROM products WHERE supplier REGEXP '[a-f]';  
+#Finds rows where 'supplier' contains letters from a to f
+
+#Starts with a character:
+SELECT * FROM products WHERE supplier REGEXP '^M';  
+#Finds rows where 'supplier' starts with 'M'
+
+#Custom pattern with wildcards:
+SELECT * FROM products WHERE supplier REGEXP 'M.t';  
+#Finds rows where 'supplier' contains an 'M', followed by any single character, then a 't'
+
+#Words containing repeated letters:
+SELECT * FROM products WHERE name REGEXP 'e.*e';  
+#Finds rows where 'name' contains at least two 'e's with any characters in between
+
+
+
+
