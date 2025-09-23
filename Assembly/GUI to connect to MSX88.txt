@@ -1,0 +1,17 @@
+mount c C:\Users\HP\Downloads\APP\MSX88Portable\msx88
+
+asm88 nombre_programa.asm
+
+nombre_programa
+nombre_programa
+
+link88 nombre_programa.O
+
+nombre_programa
+
+msx88
+
+--------------
+
+L nombre_programa
+G
