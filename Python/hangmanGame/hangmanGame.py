@@ -1,6 +1,6 @@
 import random
 import string
-from palabras import palabras
+from words import words
 from DicVisualVidas import vidasdicv
 
 
@@ -18,7 +18,7 @@ def ahorcado():
     print("Bienvenido al juego del ahorcado")
     print("================================")
 
-    palabra = obte(palabras)
+    palabra = obte(words)
 
     letraspa = set(palabra)
     abecedario = set(string.ascii_uppercase)
