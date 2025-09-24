@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=python,cpp,java,mysql,fortran" alt="Languages"/>
+    <img src="https://skillicons.dev/icons?i=python,cpp,java,mysql,fortran,unity" alt="Languages"/>
   </a>
   <img src="https://img.shields.io/badge/LC--3-assembly-blue" alt="LC-3"/>
   <img src="https://img.shields.io/badge/Prolog-logic-blue" alt="Prolog"/>

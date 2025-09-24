@@ -1,2 +1,9 @@
 *.pdsbak
 *.workspace
+/vs
+.vsconfig
+/Temp/
+/Obj/
+/Build/
+/Builds/
+/Library/
