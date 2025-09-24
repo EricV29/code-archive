@@ -7,3 +7,10 @@
 /Build/
 /Builds/
 /Library/
+*.tmp
+*.log
+Thumbs.db
+.DS_Store
+Assembly-CSharp.csproj
+Assembly-CSharp-Editor.csproj
+*.sln
