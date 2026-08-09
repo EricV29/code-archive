@@ -1,0 +1,12 @@
+# Descargas y logs (generados en tiempo de ejecución)
+downloads/
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.env
